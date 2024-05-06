@@ -74,13 +74,14 @@ def calcular_tempo_ciclo_primario_e_secundario(periodos, maiores_tempos_execucao
 
 def ultima_execucao(tarefa, ciclos, ciclo_atual, tempo_atual):
     ultima_exec = -1  # Inicializa com -1 para indicar que a tarefa ainda não foi executada
-    if len(ciclos) == 0:
-        return ultima_exec
 
     for task in ciclo_atual:
         if task['id'] == tarefa['id']:
             ultima_exec = -2
             return ultima_exec
+
+    if len(ciclos) == 0:
+        return ultima_exec
 
     for num_ciclo, ciclo in reversed(list(enumerate(ciclos))):
         for posicao, t in enumerate(ciclo):
@@ -134,6 +135,9 @@ def ordenar_tarefas_por_setf(tarefas, tempo_ciclo_primario, tempo_ciclo_secundar
 
                         if len(tarefas_ordenadas) == 1:
                             recomece_for = 0
+                        elif tarefa == tarefas_ordenadas[-1]:
+                            recomece_for = 0
+                            break
                         else:
                             continue
 
